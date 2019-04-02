@@ -14,7 +14,7 @@ export interface FormRenderProps extends FormState {
   ) => Promise<object | undefined> | undefined
 }
 
-interface FormConfig extends Config {
+interface FormConfig<FormData> extends Config<FormData> {
   subscription?: FormSubscription
   initialValuesEqual?: (a: object, b: object) => boolean
 }
@@ -36,12 +36,14 @@ export interface FieldRenderProps<V = any> {
   meta: NonFunctionProperties<FieldState>
 }
 
-interface FormConfig extends Config {
+interface FormConfig<FormData> extends Config<FormData> {
   subscription?: FormSubscription
 }
 
 declare module 'react-final-form-hooks' {
-  export function useForm(config: FormConfig): FormRenderProps
+  export function useForm<FormData = object>(
+    config: FormConfig<FormData>
+  ): FormRenderProps
   export function useFormState(
     form: FormApi,
     subscription?: FormSubscription
